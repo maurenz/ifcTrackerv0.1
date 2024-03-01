@@ -3,8 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-#df = pd.read_excel('/Users/remaurenz/Desktop/IFC/4-full-complete.xlsx') # Datei laden
-
 # Datei-Upload-Widget
 uploaded_file = st.file_uploader("Wähle eine Excel-Datei aus", type=['xlsx'])
 
@@ -33,7 +31,7 @@ if not filtered_data.empty:
 
     # Setze die x-Ticks auf die eindeutigen Datumsangaben in den gefilterten Daten
     ax.set_xticks(filtered_data['Datum'].unique())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d.%m.%y'))
+    #ax.xaxis.set_major_formatter(mdates.DateFormatter('%d.%m.%y'))
     ax.set_xlabel('Datum')
     ax.set_ylabel('Percentage')
     ax.legend()
