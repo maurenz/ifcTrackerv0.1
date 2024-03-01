@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
+#import matplotlib.dates as mdates
 
 # Datei-Upload-Widget
 uploaded_file = st.file_uploader("Wähle eine Excel-Datei aus", type=['xlsx'])
