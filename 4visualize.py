@@ -1,7 +1,10 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-#import matplotlib.dates as mdates
+import matplotlib.dates as mdates
+
+# Streamlit UI
+st.title("Ifc Tracker")
 
 # Datei-Upload-Widget
 uploaded_file = st.file_uploader("Wähle eine Excel-Datei aus", type=['xlsx'])
@@ -13,8 +16,7 @@ if uploaded_file is not None:
 # Datumsformat konvertieren
 df['Datum'] = pd.to_datetime(df['Datum'], format='%d.%m.%Y')
 
-# Streamlit UI
-st.title("Weilerbach Modelle Dez - Feb")
+
 
 # Multiple choice Selektoren
 selected_clusters = st.multiselect('Wähle Cluster:', options=df['Cluster'].unique())
@@ -28,17 +30,26 @@ if not filtered_data.empty:
     fig, ax = plt.subplots()
     for (cluster, tp), group in filtered_data.groupby(['Cluster', 'TP']):
         ax.plot(group['Datum'], group['percentage'], label=f' {cluster}, TP {tp}')
+        # Zeichne Kreise an jedem Datenpunkt
+        ax.scatter(group['Datum'], group['percentage'], s=10)
 
     # Setze die x-Ticks auf die eindeutigen Datumsangaben in den gefilterten Daten
     ax.set_xticks(filtered_data['Datum'].unique())
-    #ax.xaxis.set_major_formatter(mdates.DateFormatter('%d.%m.%y'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d.%m.%y'))
     ax.set_xlabel('Datum')
-    ax.set_ylabel('Percentage')
+    ax.set_ylabel('Developement [%]')
     ax.legend()
     plt.xticks(rotation=45)  # Dreht die x-Achsen-Beschriftungen für bessere Lesbarkeit
+
+    # Zeichne graue horizontale Linien bei jedem Y-Achsen-Label
+    y_ticks = ax.get_yticks()
+    for y in y_ticks:
+        ax.axhline(y, color='#cccccc', linestyle='-', linewidth=0.3)
+
     st.pyplot(fig)
 else:
     st.write("Bitte wähle mindestens einen Cluster und einen TP aus, um die Daten anzuzeigen.")
+
 
 #df.sort_values('Datum', inplace=True)
 
