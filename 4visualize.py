@@ -18,7 +18,7 @@ if uploaded_file is not None:
     df['Datum'] = pd.to_datetime(df['Datum'], format='%d.%m.%Y')
 
     # Multiple choice Selektoren
-    default_start_date = datetime(2023, 12, 1)
+    default_start_date = datetime(2020, 1, 1)
     default_end_date = datetime.now()
     default_cluster = ["HAA"] if "HAA" in df['Cluster'].unique() else None
     default_values_tps = [value for value in [1, 2, 3] if value in df['TP'].unique()]
