@@ -19,8 +19,11 @@ if uploaded_file is not None:
 
 
     # Multiple choice Selektoren
-    selected_clusters = st.multiselect('Wähle Cluster:', options=df['Cluster'].unique())
-    selected_tps = st.multiselect('Wähle TP:', options=df['TP'].unique())
+    default_cluster = ["HAA"] if "HAA" in df['Cluster'].unique() else None
+    default_values_tps = [value for value in [1, 2, 3] if value in df['TP'].unique()]
+
+    selected_clusters = st.multiselect('Wähle Cluster:', options=df['Cluster'].unique(), default=default_cluster)
+    selected_tps = st.multiselect('Wähle TP:', options=df['TP'].unique(), default=[1, 2, 3])
     
     # Daten basierend auf Auswahl filtern
     filtered_data = df[df['Cluster'].isin(selected_clusters) & df['TP'].isin(selected_tps)]
